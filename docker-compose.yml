@@ -1,0 +1,24 @@
+services:
+  syncthing:
+    image: lscr.io/linuxserver/syncthing:latest
+    container_name: syncthing
+    hostname: syncthing-emulators-server #optional
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TIMEZONE}
+    volumes:
+      - ./config:/config
+      - ${DATA_FOLDER}:/data
+    ports:
+      - ${WEBUI_PORT:-8384}:8384
+      - ${LISTENING_PORT:-22000}:22000/tcp
+      - ${LISTENING_PORT:-22000}:22000/udp
+      - ${PROTOCOL_DISCOVERY_PORT:-21027}:21027/udp
+    restart: unless-stopped
+    networks:
+      - net
+
+networks:
+  net:
+    external: false
