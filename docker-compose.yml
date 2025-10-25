@@ -2,13 +2,13 @@ services:
   syncthing:
     image: lscr.io/linuxserver/syncthing:latest
     container_name: syncthing
-    hostname: syncthing-emulators-server #optional
+    hostname: syncthing-emulators-server
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TIMEZONE}
     volumes:
-      - ./config:/config
+      - config:/config
       - ${DATA_FOLDER}:/data
     ports:
       - ${WEBUI_PORT:-8384}:8384
@@ -22,3 +22,7 @@ services:
 networks:
   net:
     external: false
+
+volumes:
+  config:
+    name: syncthing-config
