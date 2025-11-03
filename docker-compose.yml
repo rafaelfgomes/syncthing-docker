@@ -8,7 +8,7 @@ services:
       - PGID=${PGID}
       - TZ=${TIMEZONE}
     volumes:
-      - config:/config
+      - ${CONFIG_FOLDER:-./config}:/config
       - ${DATA_FOLDER}:/data
     ports:
       - ${WEBUI_PORT:-8384}:8384
@@ -22,7 +22,3 @@ services:
 networks:
   net:
     external: false
-
-volumes:
-  config:
-    name: syncthing-config
