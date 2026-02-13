@@ -1,6 +1,6 @@
 services:
   syncthing:
-    image: lscr.io/linuxserver/syncthing:latest
+    image: lscr.io/linuxserver/syncthing
     container_name: syncthing
     hostname: syncthing-emulators-server
     environment:
@@ -8,17 +8,14 @@ services:
       - PGID=${PGID}
       - TZ=${TIMEZONE}
     volumes:
-      - ${CONFIG_FOLDER:-./config}:/config
-      - ${DATA_FOLDER}:/data
-    ports:
-      - ${WEBUI_PORT:-8384}:8384
-      - ${LISTENING_PORT:-22000}:22000/tcp
-      - ${LISTENING_PORT:-22000}:22000/udp
-      - ${PROTOCOL_DISCOVERY_PORT:-21027}:21027/udp
+      - ${SYNCTHING_CONFIG_FOLDER:-./config}:/config
+      - ${SYNCTHING_DATA_FOLDER}:/data
     restart: unless-stopped
     networks:
-      - net
+      external:
+        ipv4_address: ${SYNCTHING_IP}
 
 networks:
-  net:
-    external: false
+  external:
+    external: true
+    name: ${EXTERNAL_NETWORK_NAME}
