@@ -1,0 +1,37 @@
+services:
+  syncthing-emulators:
+    image: lscr.io/linuxserver/syncthing
+    container_name: syncthing-emulators
+    hostname: syncthing-emulators
+    environment:
+      - PUID=${PUID:-1000}
+      - PGID=${PGID:-1000}
+      - TZ=${TIMEZONE:-Etc/UTC}
+    volumes:
+      - ${SYNCTHING_EMULATORS_CONFIG_FOLDER:-./syncthing-emulators/config}:/config
+      - ${SYNCTHING_EMULATORS_DATA_FOLDER}:/data/emulators
+    restart: unless-stopped
+    networks:
+      external:
+        ipv4_address: ${SYNCTHING_EMULATORS_IP}
+
+  syncthing-backups:
+    image: lscr.io/linuxserver/syncthing
+    container_name: syncthing-backups
+    hostname: syncthing-backups
+    environment:
+      - PUID=${PUID:-1000}
+      - PGID=${PGID:-1000}
+      - TZ=${TIMEZONE:-Etc/UTC}
+    volumes:
+      - ${SYNCTHING_BACKUP_CONFIG_FOLDER:-./syncthing-backup/config}:/config
+      - ${SYNCTHING_BACKUP_DATA_FOLDER}:/data/backups
+    restart: unless-stopped
+    networks:
+      external:
+        ipv4_address: ${SYNCTHING_BACKUP_IP}
+
+networks:
+  external:
+    external: true
+    name: ${EXTERNAL_NETWORK_NAME}

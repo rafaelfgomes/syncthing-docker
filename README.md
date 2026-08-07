@@ -2,7 +2,7 @@
 
 Syncthing is a service to syncronize files between two folders remotely or locally.
 
-For more information about Syncthing click [here][Syncthing site].
+For more information about Syncthing, see the [Syncthing official website][Syncthing site].
 
 ## How to install and run
 
